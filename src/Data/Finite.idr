@@ -43,14 +43,6 @@ public export
   values {n = 0}   = [[]]
   values {n = S k} = [| values :: values |]
 
-weaken : List (Fin k) -> List (Fin $ S k)
-weaken []        = []
-weaken (x :: xs) = weaken x :: weaken xs
-
-fins : {n : _} -> List (Fin n)
-fins {n = 0}   = []
-fins {n = S k} = last :: weaken (fins {n = k})
-
 public export %inline
 {n : _} -> Finite (Fin n) where
-  values = fins
+  values = allFins n
