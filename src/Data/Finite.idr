@@ -43,6 +43,20 @@ public export
   values {n = 0}   = [[]]
   values {n = S k} = [| values :: values |]
 
+||| Denotationally equivalent to `Data.Fin.allFins`, but runs in linear,
+||| instead of quadratic time. This is done by leveraging the runtime
+||| optimisation of natural-number shaped datatypes as described here: 
+||| https://idris2.readthedocs.io/en/latest/reference/builtins.html
+||| Similar function also appears in `idris2-array` library in 
+||| `Data.Array.Index.allFinsFast`
+allFinsFast : (n : Nat) -> List (Fin n)
+allFinsFast 0 = []
+allFinsFast (S n) = go [] last
+  where
+    go : List (Fin k) -> Fin k -> List (Fin k)
+    go xs FZ     = FZ :: xs
+    go xs (FS x) = go (FS x :: xs) (assert_smaller (FS x) $ weaken x)
+
 public export %inline
 {n : _} -> Finite (Fin n) where
-  values = allFins n
+  values = allFinsFast n
