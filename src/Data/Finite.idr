@@ -43,7 +43,7 @@ public export
   values {n = 0}   = [[]]
   values {n = S k} = [| values :: values |]
 
--- Denotationally equivalent to `Data.Fin.allFins`, but runs in linear, instead 
+-- Denotationally equivalent to `Data.Fin.allFins`, but runs in linear, instead
 -- of quadratic time. This is done by leveraging the runtime optimisation of
 -- natural-number shaped datatypes as described here:
 -- https://idris2.readthedocs.io/en/latest/reference/builtins.html
